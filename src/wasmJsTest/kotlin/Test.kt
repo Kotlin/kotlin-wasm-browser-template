@@ -1,10 +1,8 @@
 import kotlinx.browser.document
 import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.HTMLSpanElement
 import org.w3c.dom.get
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class BrowserTest {
     @Test
