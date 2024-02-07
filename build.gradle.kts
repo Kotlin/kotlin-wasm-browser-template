@@ -21,4 +21,12 @@ kotlin {
             }
         }
     }
+
+    sourceSets {
+        val wasmJsTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+    }
 }
