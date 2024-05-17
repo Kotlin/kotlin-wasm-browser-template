@@ -3,20 +3,33 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform) 
+    alias(libs.plugins.kotlinMultiplatform)
 }
 
 group = "me.user"
 version = "1.0-SNAPSHOT"
 
+val kotlin_repo_url: String? = project.properties["kotlin_repo_url"] as String?
+val language_version: String? = project.properties["language_version"] as String?
+
 repositories {
     mavenCentral()
+
+    kotlin_repo_url?.also { maven(it) }
 }
 
 kotlin {
     wasmJs {
         binaries.executable()
         browser()
+
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                language_version?.let {
+                    compilerOptions.languageVersion.set(fromVersion(it))
+                }
+            }
+        }
     }
 
     sourceSets {
