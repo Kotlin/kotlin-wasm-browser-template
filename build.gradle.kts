@@ -4,6 +4,9 @@ plugins {
     kotlin("multiplatform") version "2.0.0"
 }
 
+group = "me.user"
+version = "1.0-SNAPSHOT"
+
 repositories {
     mavenCentral()
 }
@@ -23,10 +26,13 @@ kotlin {
     }
 
     sourceSets {
-        val wasmJsTest by getting {
+      val commonMain by getting
+        val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
+        val wasmJsMain by getting
+        val wasmJsTest by getting
     }
 }
