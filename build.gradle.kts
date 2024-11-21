@@ -32,7 +32,11 @@ kotlin {
                 implementation(libs.kotlin.test)
             }
         }
-        val wasmJsMain by getting
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.kotlinx.browser)
+            }
+        }
         val wasmJsTest by getting
     }
 }
