@@ -15,10 +15,11 @@ kotlin {
     wasmJs {
         binaries.executable()
         browser {
+            val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
-                        add(project.rootDir.path)
+                        add(projectDirPath)
                     }
                 }
             }
