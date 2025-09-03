@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.0.10"
+kotlin = "2.2.10"
 kotlinx-browser = "0.3"
 
 [libraries]

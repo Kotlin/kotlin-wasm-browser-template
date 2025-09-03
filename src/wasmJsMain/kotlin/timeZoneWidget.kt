@@ -41,17 +41,17 @@ private fun updateTime(input: HTMLInputElement, output: Element) {
     }, 100)
 
     window.fetch("https://worldtimeapi.org/api/timezone/${input.value}")
-        .then {
+        .then { response ->
             window.clearInterval(progressId)
 
-            if (it.ok) {
-                it.json().then {
-                    output.textContent = (it as WorldTimeApiResponse).datetime
+            if (response.ok) {
+                response.json().then { json ->
+                    output.textContent = json?.unsafeCast<WorldTimeApiResponse>()?.datetime
                         ?.substringAfter("T")?.substringBefore(".") ?: "🧐"
                     null
                 }
             } else {
-                output.textContent = "🤷 " + it.status
+                output.textContent = "🤷 " + response.status
             }
             null
         }
@@ -62,6 +62,6 @@ private fun updateTime(input: HTMLInputElement, output: Element) {
         }
 }
 
-external interface WorldTimeApiResponse {
+external interface WorldTimeApiResponse: JsAny {
     val datetime: String?
 }
