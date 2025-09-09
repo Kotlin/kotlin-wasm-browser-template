@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalWasmJsInterop::class)
+
 import kotlinx.browser.document
 import kotlinx.browser.window
 import kotlinx.dom.appendElement
