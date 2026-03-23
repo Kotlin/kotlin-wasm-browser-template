@@ -25,3 +25,5 @@
 
 .idea
 .kotlin
+/tmp/
+/local.properties
