@@ -42,14 +42,16 @@ private fun updateTime(input: HTMLInputElement, output: Element) {
         null
     }, 100)
 
-    window.fetch("https://worldtimeapi.org/api/timezone/${input.value}")
+    window.fetch("https://timeapi.io/api/Time/current/zone?timeZone=${input.value}")
         .then { response ->
             window.clearInterval(progressId)
 
             if (response.ok) {
                 response.json().then { json ->
-                    output.textContent = json?.unsafeCast<WorldTimeApiResponse>()?.datetime
-                        ?.substringAfter("T")?.substringBefore(".") ?: "🧐"
+                    val timeApiResponse = json?.unsafeCast<TimeApiResponse>()
+                    val date = timeApiResponse?.date ?: "🤔"
+                    val time = timeApiResponse?.time ?: "🧐"
+                    output.textContent = "📅 $date ⏰ $time" 
                     null
                 }
             } else {
@@ -64,6 +66,39 @@ private fun updateTime(input: HTMLInputElement, output: Element) {
         }
 }
 
-external interface WorldTimeApiResponse: JsAny {
-    val datetime: String?
+/*
+Response for `https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam`:
+```json 
+{
+  "year": 2026,
+  "month": 3,
+  "day": 18,
+  "hour": 14,
+  "minute": 2,
+  "seconds": 26,
+  "milliSeconds": 382,
+  "dateTime": "2026-03-18T14:02:26.3823348",
+  "date": "03/18/2026",
+  "time": "14:02",
+  "timeZone": "Europe/Amsterdam",
+  "dayOfWeek": "Wednesday",
+  "dstActive": false
+}
+```
+ */
+external interface TimeApiResponse: JsAny {
+    val year: Int
+    val month: Int
+    val day: Int
+    val hour: Int
+    val minute: Int
+    val seconds: Int
+    val milliSeconds: Int
+    val dateTime: String
+    val date: String
+    val time: String
+    val timeZone: String
+    val dayOfWeek: String
+    val dstActive: Boolean
+
 }
