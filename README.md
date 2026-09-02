@@ -50,7 +50,7 @@ To build and run the application:
 1. In IntelliJ IDEA, open the repository.
 2. Run the application by typing the following Gradle command in the terminal:
 
-   `./gradlew wasmJsBrowserRun -t`
+   `./gradlew wasmJsBrowserProductionRun -t`
    <br>&nbsp;<br>
 
 Once the application starts, open the following URL in your browser:
