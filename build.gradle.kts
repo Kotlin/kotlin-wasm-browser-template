@@ -16,7 +16,16 @@ repositories {
 kotlin {
     wasmJs {
         binaries.executable()
-        browser()
+        browser {
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        add(projectDirPath)
+                    }
+                }
+            }
+        }
     }
 
     sourceSets {
