@@ -1,7 +1,5 @@
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-
 plugins {
-    alias(libs.plugins.kotlinMultiplatform) 
+    alias(libs.plugins.kotlinMultiplatform)
 }
 
 group = "me.user"
@@ -14,14 +12,7 @@ repositories {
 kotlin {
     wasmJs {
         binaries.executable()
-        browser {
-            val projectDirPath = project.projectDir.path
-            commonWebpackConfig {
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static(projectDirPath)
-                }
-            }
-        }
+        browser()
     }
 
     sourceSets {
