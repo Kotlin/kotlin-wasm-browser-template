@@ -1,4 +1,4 @@
-[![Incubator](https://jb.gg/badges/incubator-plastic.svg)](https://github.com/JetBrains#jetbrains-on-github)
+[![Official project](https://jb.gg/badges/official-plastic.svg)](https://github.com/JetBrains#jetbrains-on-github)
 
 # Kotlin/Wasm Browser Example
 
@@ -16,8 +16,11 @@ Before starting, ensure you have the necessary IDE and browser setup to run the 
 
 ### IDE
 
-We recommend using [IntelliJ IDEA 2023.1 or later](https://www.jetbrains.com/idea/) to work with the project.
-It supports Kotlin/Wasm out of the box.
+We recommend using the latest version of [IntelliJ IDEA](https://www.jetbrains.com/idea/) (2026.2
+or later) to work with the project.
+
+To debug Kotlin/Wasm code in IntelliJ IDEA, you must have the JavaScript Debugger plugin installed.
+[See more information about the plugin and how to install it.](https://www.jetbrains.com/help/idea/debugging-javascript-in-chrome.html#ws_js_debugging_chrome_before_you_start)
 
 ### Browser (for Kotlin/Wasm target)
 
@@ -37,8 +40,9 @@ To run Kotlin/Wasm applications in a browser, you need a browser supporting the 
 
 **Safari/WebKit**
 
-Wasm GC support is currently under
-[active development](https://bugs.webkit.org/show_bug.cgi?id=247394).
+* **For version 18.2 or later:**
+
+  Works by default.
 
 > **Note:**
 > For more information about the browser versions, see the [Troubleshooting documentation](https://kotl.in/wasm_help/).
@@ -51,15 +55,6 @@ To build and run the application:
 2. Run the application by typing the following Gradle command in the terminal:
 
    `./gradlew wasmJsBrowserProductionRun -t`
-   <br>&nbsp;<br>
-
-Once the application starts, open the following URL in your browser:
-
-`http://localhost:8080`
-
-> **Note:**
-> The port number can vary. If the port 8080 is unavailable, you can find the corresponding port number printed in the console
-> after building the application.
 
 ## Feedback and questions
 
