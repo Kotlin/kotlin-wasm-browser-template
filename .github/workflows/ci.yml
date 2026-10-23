@@ -3,23 +3,36 @@ on:
   push:
     branches:
       - main
-      
+  pull_request:
+
+# Allow only one run at a time per branch or pull request
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel outdated pull request runs when new commits are pushed (except main).
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Build job
   build:
     name: Build Kotlin/Wasm
     runs-on: ubuntu-latest
     steps:
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'
-        java-version: '11'
-
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
 
-    - name: Run Gradle Tasks
+    - name: Set up JDK
+      uses: actions/setup-java@v6
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v6
+
+    - name: Run tests
+      run: ./gradlew wasmJsBrowserTest
+
+    - name: Build distribution
       run: ./gradlew wasmJsBrowserDistribution
 
     - name: Fix permissions
@@ -29,13 +42,15 @@ jobs:
         done
 
     - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v3
+      uses: actions/upload-pages-artifact@v5
       with:
         path: build/dist/wasmJs/productionExecutable/
 
   deploy:
     # Add a dependency to the build job
     needs: build
+    # Only deploy from main, not from pull requests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
@@ -52,4 +67,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
