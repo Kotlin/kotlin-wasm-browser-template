@@ -1,4 +1,4 @@
-[![Incubator](https://jb.gg/badges/incubator-plastic.svg)](https://github.com/JetBrains#jetbrains-on-github)
+[![Beta](https://img.shields.io/badge/project-beta-green.svg?colorA=303033&colorB=4B8BF5&label=JetBrains&style=plastic)](https://github.com/JetBrains#jetbrains-on-github)
 
 # Kotlin/Wasm Browser Example
 
@@ -37,8 +37,9 @@ To run Kotlin/Wasm applications in a browser, you need a browser supporting the 
 
 **Safari/WebKit**
 
-Wasm GC support is currently under
-[active development](https://bugs.webkit.org/show_bug.cgi?id=247394).
+* **For version 18.2 or later:**
+
+  Works by default.
 
 > **Note:**
 > For more information about the browser versions, see the [Troubleshooting documentation](https://kotl.in/wasm_help/).

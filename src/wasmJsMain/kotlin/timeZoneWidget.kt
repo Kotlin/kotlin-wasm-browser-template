@@ -16,7 +16,7 @@ fun Element.addTimeZoneWidget() {
         val input = appendElement("input") {
             this as HTMLInputElement
             type = "text"
-            placeholder="Timezone"
+            placeholder = "Timezone"
 
             value = "Europe/Amsterdam"
 
@@ -32,6 +32,8 @@ fun Element.addTimeZoneWidget() {
     }
 }
 
+private external fun encodeURIComponent(value: String): String
+
 private val progress = "⡆⠇⠋⠙⠸⢰⣠⣄".map(Char::toString)
 
 private fun updateTime(input: HTMLInputElement, output: Element) {
@@ -42,7 +44,8 @@ private fun updateTime(input: HTMLInputElement, output: Element) {
         null
     }, 100)
 
-    window.fetch("https://timeapi.io/api/Time/current/zone?timeZone=${input.value}")
+    val timeZone = encodeURIComponent(input.value)
+    window.fetch("https://timeapi.io/api/Time/current/zone?timeZone=$timeZone")
         .then { response ->
             window.clearInterval(progressId)
 
@@ -51,7 +54,7 @@ private fun updateTime(input: HTMLInputElement, output: Element) {
                     val timeApiResponse = json?.unsafeCast<TimeApiResponse>()
                     val date = timeApiResponse?.date ?: "🤔"
                     val time = timeApiResponse?.time ?: "🧐"
-                    output.textContent = "📅 $date ⏰ $time" 
+                    output.textContent = "📅 $date ⏰ $time"
                     null
                 }
             } else {
@@ -68,7 +71,7 @@ private fun updateTime(input: HTMLInputElement, output: Element) {
 
 /*
 Response for `https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam`:
-```json 
+```json
 {
   "year": 2026,
   "month": 3,
@@ -100,5 +103,4 @@ external interface TimeApiResponse: JsAny {
     val timeZone: String
     val dayOfWeek: String
     val dstActive: Boolean
-
 }
